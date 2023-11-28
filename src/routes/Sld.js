@@ -3,9 +3,8 @@ import NavBar from "../components/NavBar";
 import { useSelector } from "react-redux";
 import { AiTwotoneDelete } from "react-icons/ai";
 import Axios from "axios";
-import * as React from "react";
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
+
+import { PiBuildingsLight } from "react-icons/pi";
 
 import { ImLocation } from "react-icons/im";
 
@@ -71,12 +70,9 @@ function Sld() {
             </div>
           ))
         ) : (
-          <Backdrop
-            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open
-          >
-            <CircularProgress color="inherit" />
-          </Backdrop>
+          <div className="lol">
+            <PiBuildingsLight className="circle" />
+          </div>
         )}
       </div>
     </div>

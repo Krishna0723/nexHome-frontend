@@ -4,9 +4,8 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { ImLocation, ImCross } from "react-icons/im";
 import Axios from "axios";
 import "./Buy.css";
-import * as React from "react";
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
+
+import { PiBuildingsLight } from "react-icons/pi";
 
 function Buy() {
   const [arr, setArr] = useState([]);
@@ -299,15 +298,11 @@ function Buy() {
                 </div>
               ))
             ) : (
-              <Backdrop
-                sx={{
-                  color: "#fff",
-                  zIndex: (theme) => theme.zIndex.drawer + 1,
-                }}
-                open
-              >
-                <CircularProgress color="inherit" />
-              </Backdrop>
+              <div className="lol">
+                {/* <div className="circle"> */}
+                <PiBuildingsLight className="circle" />
+                {/* </div> */}
+              </div>
             )}
           </div>
 

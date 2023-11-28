@@ -41,3 +41,51 @@ button {
 .property-list {
   width: 70%;
 }
+
+.lol {
+  width: 30px;
+  height: 30px;
+  /* border: 2px solid rgb(255, 62, 62); */
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border-radius: 50%;
+}
+
+.circle {
+  /* width: 30px;
+  height: 30px;
+  border-radius: 50%; */
+  /* background-color: greenyellow; */
+  font-size: 3rem;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  margin: auto;
+  -webkit-animation: circle 5s linear infinite;
+  animation: circle 5s linear infinite;
+}
+
+@-webkit-keyframes circle {
+  0% {
+    transform: rotate(0deg) translate(-30px) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translate(-30px) rotate(-360deg);
+  }
+}
+
+@keyframes circle {
+  0% {
+    transform: rotate(0deg) translate(-30px) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translate(-30px) rotate(-360deg);
+  }
+}
