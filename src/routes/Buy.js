@@ -4,6 +4,9 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { ImLocation, ImCross } from "react-icons/im";
 import Axios from "axios";
 import "./Buy.css";
+import * as React from "react";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function Buy() {
   const [arr, setArr] = useState([]);
@@ -14,6 +17,8 @@ function Buy() {
   const [propertyType, setPropertyType] = useState("all");
   const [houseType, setHouseType] = useState("all");
   const [filteredArr, setFilteredArr] = useState([]);
+
+  const [post, setPost] = useState(false);
 
   const [clientInfo, setClientInfo] = useState({
     textarea: "",
@@ -77,6 +82,7 @@ function Buy() {
             setArr(sortedData);
             setShuffledArr([...sortedData].sort(() => Math.random() - 0.5));
             setFilteredArr(sortedData);
+            setPost(true);
           } else {
             Promise.reject();
           }
@@ -239,110 +245,72 @@ function Buy() {
         </div>
         <div className="property-list">
           <div className="apartments">
-            {filteredArr.map((val, index) => (
-              <div className="single" key={index}>
-                <img src={val.linkarr[0]} alt="houseimage" />
-                <div className="single-text">
-                  <div className="tags">
-                    <div>
-                      <p className="tag">{val.Type}</p>
+            {post ? (
+              filteredArr.map((val, index) => (
+                <div className="single" key={index}>
+                  <img src={val.linkarr[0]} alt="houseimage" />
+                  <div className="single-text">
+                    <div className="tags">
+                      <div>
+                        <p className="tag">{val.Type}</p>
+                      </div>
+                      <div>
+                        <p>
+                          {val.to === "Sell" ? (
+                            <p className="tag">Buy</p>
+                          ) : (
+                            <p className="tag">Rent</p>
+                          )}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <p>
-                        {val.to === "Sell" ? (
-                          <p className="tag">Buy</p>
-                        ) : (
-                          <p className="tag">Rent</p>
-                        )}
-                      </p>
+                    <h4 className="property-name">{val.name}</h4>
+                    <p className="property-city">
+                      <ImLocation />
+                      {val.Location}
+                    </p>
+                    <div className="property-details">
+                      <div className="bedrooms">
+                        <i className="icon">🛏</i>
+                        <span>{val.bedrooms} </span>
+                      </div>
+                      <div className="bathrooms">
+                        <i className="icon">🛁</i>
+                        <span>{val.bathrooms} </span>
+                      </div>
                     </div>
-                  </div>
-                  <h4 className="property-name">{val.name}</h4>
-                  <p className="property-city">
-                    <ImLocation />
-                    {val.Location}
-                  </p>
-                  <div className="property-details">
-                    <div className="bedrooms">
-                      <i className="icon">🛏</i>
-                      <span>{val.bedrooms} </span>
+                    <label className="price">
+                      <span className="currency-icon">₹</span>
+                      {val.cost}
+                    </label>
+                    <div className="buyer-tag">
+                      <button
+                        type="button"
+                        className="contact-button"
+                        onClick={() => handleOpenClick(index)}
+                      >
+                        Contact Agent
+                      </button>
+                      <i className="icon">
+                        <AiOutlineHeart />
+                      </i>
                     </div>
-                    <div className="bathrooms">
-                      <i className="icon">🛁</i>
-                      <span>{val.bathrooms} </span>
-                    </div>
-                  </div>
-                  <label className="price">
-                    <span className="currency-icon">₹</span>
-                    {val.cost}
-                  </label>
-                  <div className="buyer-tag">
-                    <button
-                      type="button"
-                      className="contact-button"
-                      onClick={() => handleOpenClick(index)}
-                    >
-                      Contact Agent
-                    </button>
-                    <i className="icon">
-                      <AiOutlineHeart />
-                    </i>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <Backdrop
+                sx={{
+                  color: "#fff",
+                  zIndex: (theme) => theme.zIndex.drawer + 1,
+                }}
+                open
+              >
+                <CircularProgress color="inherit" />
+              </Backdrop>
+            )}
           </div>
-          {/* {openPopupIndex !== null && (
-            <div className="popup">
-              <div className="popup-header">
-                <h1>Hello this is pop up</h1>
-                <div className="popup-images">
-                  {shuffledArr[openPopupIndex].linkarr.map(
-                    (image, imageIndex) => (
-                      <img key={imageIndex} src={image} alt={"houseimage"} />
-                    )
-                  )}
-                </div>
 
-                <h4>{shuffledArr[openPopupIndex].name}</h4>
-                <p>Type: {shuffledArr[openPopupIndex].Type}</p>
-                <p>Location: {shuffledArr[openPopupIndex].Location}</p>
-                <p>Bedrooms: {shuffledArr[openPopupIndex].bedrooms}</p>
-                <p>Bathrooms: {shuffledArr[openPopupIndex].bathrooms}</p>
-                <p>Description: {shuffledArr[openPopupIndex].info}</p>
-                <p>Cost: ₹{shuffledArr[openPopupIndex].cost}</p>
-
-                <div className="popup-content">
-                  <textarea
-                    placeholder="Enter your information..."
-                    rows="4"
-                    value={clientInfo.textarea}
-                    onChange={(e) => handleTextAreaChange(e)}
-                  ></textarea>
-                  <input
-                    type="text"
-                    placeholder="Phone Number"
-                    value={clientInfo.phoneNumber}
-                    onChange={(e) => handleInputChange(e, "phoneNumber")}
-                  />
-                  <input
-                    type="text"
-                    placeholder="Email"
-                    value={clientInfo.email}
-                    onChange={(e) => handleInputChange(e, "email")}
-                  />
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    value={clientInfo.name}
-                    onChange={(e) => handleInputChange(e, "name")}
-                  />
-                  <button onClick={handleSubmit}>Submit</button>
-                </div>
-              </div>
-              <ImCross className="popup-icon" onClick={closePopUp} />
-            </div>
-          )} */}
           {openPopupIndex !== null && (
             <div className="popup">
               <div className="popup-header">
