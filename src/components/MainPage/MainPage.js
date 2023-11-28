@@ -22,7 +22,7 @@ const MainPage = () => {
       className: "slide-2",
     },
     {
-      url: "../../Images/interior-2.jpg",
+      url: "../../Images/interior.jpeg",
       text: "Best Interior",
       className: "slide-2",
     },

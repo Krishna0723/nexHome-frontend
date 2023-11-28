@@ -15,12 +15,12 @@ const Reviews = () => {
         <div className="card-content">
           <div className="review">
             <img
-              src="../../Images/Andrea.jpg"
+              src="../../Images/user-img.jpg"
               alt="Customer"
               className="customer-img"
             />
             <div>
-              <p className="card-title">Lilly</p>
+              <p className="card-title">Kamalesh</p>
               <p className="date">20, October 2023</p>
             </div>
           </div>
