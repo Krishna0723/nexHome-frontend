@@ -68,8 +68,8 @@ button {
   right: 0;
   overflow: hidden;
   margin: auto;
-  -webkit-animation: circle 5s linear infinite;
-  animation: circle 5s linear infinite;
+  -webkit-animation: circle 2s linear infinite;
+  animation: circle 2s linear infinite;
 }
 
 @-webkit-keyframes circle {
