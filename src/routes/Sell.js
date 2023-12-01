@@ -140,24 +140,27 @@ function Sell() {
       "https://nexhome-backend-uhpg.onrender.com/sell/create-sell",
       data
     )
-      .then((res) => {
-        // console.log(res.data);
+      .then(async (res) => {
         if (res.status === 200) {
-          // alert("Successful");
+          const retData = res.data;
           document.getElementById(
             "status"
           ).innerHTML = `<p class="text-success">Uploded Successfully</p>`;
+          return retData;
         } else {
           Promise.reject();
         }
       })
-      .then(() => {
+      .then((retData) => {
         Axios.patch(
           `https://nexhome-backend-uhpg.onrender.com/nexHome/updateSellData/${currentUser._id}`,
-          data
-        ).then((res) => {
-          dispatch(updateUserSuccess(res.data.data));
-          console.log(res.data.data);
+          retData
+        ).then(async (res) => {
+          if (res.status === 200) {
+            console.log("response");
+            console.log(res.data.data);
+            await dispatch(updateUserSuccess(res.data.data));
+          }
         });
       })
 
@@ -421,7 +424,7 @@ function Sell() {
             <button
               type="submit"
               onClick={() => {
-                console.log(arr);
+                // console.log(arr);
               }}
             >
               Upload

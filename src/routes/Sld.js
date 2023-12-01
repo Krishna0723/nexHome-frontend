@@ -8,10 +8,51 @@ import { PiBuildingsLight } from "react-icons/pi";
 
 import { ImLocation } from "react-icons/im";
 
+import {
+  updateUserStart,
+  updateUserSuccess,
+  updateUserFailure,
+} from "../redux/user/userSlice";
+
+import { useDispatch } from "react-redux";
+
 function Sld() {
   const { currentUser } = useSelector((state) => state.user);
   const [sold, setSold] = useState([]);
   const [post, setPost] = useState(false);
+
+  const dispatch = useDispatch();
+
+  function handleDelete(id) {
+    dispatch(updateUserStart());
+    console.log("Deleted");
+    console.log(id);
+
+    Axios.post(
+      `https://nexhome-backend-uhpg.onrender.com/nexHome/propertyDel/${currentUser._id}`,
+      {
+        id: id,
+      }
+    )
+      .then(async (res) => {
+        if (res.status === 200) {
+          dispatch(updateUserSuccess(res.data));
+          // window.location.reload();
+        } else {
+          dispatch(updateUserFailure());
+        }
+      })
+      .then(() => {
+        Axios.delete(
+          `https://nexhome-backend-uhpg.onrender.com/sell/deletePropert/${id}`
+        ).then((res) => {
+          if (res.status === 200) {
+            // alert("Successful");
+            window.location.reload(true);
+          }
+        });
+      });
+  }
 
   useEffect(() => {
     // console.log(currentUser);
@@ -19,8 +60,8 @@ function Sld() {
       `https://nexhome-backend-uhpg.onrender.com/nexHome/getUser/${currentUser._id}`
     ).then(async (res) => {
       // console.log(res.data.dat);
-      await setSold(res.data.dat);
-      await setPost(true);
+      setSold(res.data.dat);
+      setPost(true);
     });
   });
 
@@ -63,7 +104,7 @@ function Sld() {
                 <div className="buyer-tag">
                   <button className="contact-button">more info</button>
                   <i className="icon">
-                    <AiTwotoneDelete />
+                    <AiTwotoneDelete onClick={() => handleDelete(item._id)} />
                   </i>
                 </div>
               </div>

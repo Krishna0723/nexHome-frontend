@@ -233,5 +233,46 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-color: #faf9e3;
+  }
+
+  .contact-details,
+  .city-location {
+    background-color: #faf9e3;
+  }
+  .house-pics {
+    background-color: #faf9e3;
+  }
+
+  .about-property div label,
+  .house-details div label,
+  .contact-details div label,
+  .house-pics div label {
+    color: black;
+  }
+  .contact-details label,
+  .city-location label {
+    color: black;
+  }
+
+  .city-location {
+    color: black;
+  }
+
+  /* form .radio-inputs, */
+  form .about-property,
+  form .house-details,
+  form .contact-details {
+    /* max-width: 90%; */
+    /* margin-left: 20%; */
+    padding-left: 200px;
+    /* max-width: 100%; */
+  }
+  form .radio-inputs,
+  form .about-property,
+  form .house-details,
+  form .contact-details,
+  form .house-pics {
+    max-width: 100%;
   }
 }

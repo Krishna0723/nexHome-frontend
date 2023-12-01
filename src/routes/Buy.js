@@ -28,6 +28,7 @@ function Buy() {
 
   useEffect(() => {
     // Load filter state from local storage
+    // window.location.reload(true);
     const storedFilters = JSON.parse(localStorage.getItem("buyFilters")) || {};
 
     // Set default values if there are no stored filters
