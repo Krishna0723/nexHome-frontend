@@ -95,7 +95,7 @@ function NavBar() {
                   <Link to="/profile">Profile</Link>
                   <Link to="/sold">Properties you sold</Link>
                   {/* <Link to="/sold/${currentUser._id}">Properties you sold</Link> */}
-                  {/* <Link to="/wishlist">Wishlist</Link> */}
+                  <Link to="/wishlist">Wishlist</Link>
                   <Link
                     onClick={() => {
                       localStorage.clear();

@@ -6,8 +6,18 @@ import Axios from "axios";
 import "./Buy.css";
 
 import { PiBuildingsLight } from "react-icons/pi";
+import { useSelector } from "react-redux";
+
+import {
+  updateUserStart,
+  updateUserSuccess,
+  updateUserFailure,
+} from "../redux/user/userSlice";
+import { useDispatch } from "react-redux";
 
 function Buy() {
+  const dispatch = useDispatch();
+
   const [arr, setArr] = useState([]);
   const [shuffledArr, setShuffledArr] = useState([]);
   const [openPopupIndex, setOpenPopupIndex] = useState(null);
@@ -16,6 +26,8 @@ function Buy() {
   const [propertyType, setPropertyType] = useState("all");
   const [houseType, setHouseType] = useState("all");
   const [filteredArr, setFilteredArr] = useState([]);
+
+  const { currentUser } = useSelector((state) => state.user);
 
   const [post, setPost] = useState(false);
 
@@ -144,6 +156,25 @@ function Buy() {
       sortBy,
     };
     localStorage.setItem("buyFilters", JSON.stringify(filtersToSave));
+  };
+
+  const hadleLink = (id) => {
+    console.log("Called");
+    console.log(`Product id is : ${id}`);
+    dispatch(updateUserStart());
+    Axios.patch(
+      `https://nexhome-backend-uhpg.onrender.com/nexHome/wishlist/${currentUser._id}`,
+      {
+        id: id,
+      }
+    ).then(async (res) => {
+      if (res.status === 200) {
+        // alert(res.data.msg);
+        dispatch(updateUserSuccess(res.data.user));
+      } else {
+        dispatch(updateUserFailure());
+      }
+    });
   };
 
   const map = () => {
@@ -292,7 +323,12 @@ function Buy() {
                         Contact Agent
                       </button>
                       <i className="icon">
-                        <AiOutlineHeart />
+                        <AiOutlineHeart
+                          onClick={() => {
+                            // console.log(val._id);
+                            hadleLink(val._id);
+                          }}
+                        />
                       </i>
                     </div>
                   </div>

@@ -14,6 +14,7 @@ import Profile from "./routes/Profile";
 import PrivateRoute from "./components/PrivateRoute";
 import Sld from "./routes/Sld";
 import Edit from "./routes/Edit";
+import Wishlist from "./routes/Wishlist";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route path="/logout" element={<Logout />} />
             <Route path="/sold" element={<Sld />} />
             <Route path="/edit" element={<Edit />} />
+            <Route path="/wishlist" element={<Wishlist />} />
           </Route>
         </Routes>
       </div>
