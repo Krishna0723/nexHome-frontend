@@ -14,9 +14,11 @@ import {
   updateUserFailure,
 } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function Buy() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [arr, setArr] = useState([]);
   const [shuffledArr, setShuffledArr] = useState([]);
@@ -326,7 +328,11 @@ function Buy() {
                         <AiOutlineHeart
                           onClick={() => {
                             // console.log(val._id);
-                            hadleLink(val._id);
+                            if (currentUser) {
+                              hadleLink(val._id);
+                            } else {
+                              navigate("/login");
+                            }
                           }}
                         />
                       </i>
