@@ -3,6 +3,7 @@ import NavBar from "../components/NavBar";
 import { useSelector } from "react-redux";
 import { AiTwotoneDelete } from "react-icons/ai";
 import Axios from "axios";
+import { ImCross } from "react-icons/im";
 
 import { PiBuildingsLight } from "react-icons/pi";
 
@@ -20,8 +21,17 @@ function Sld() {
   const { currentUser } = useSelector((state) => state.user);
   const [sold, setSold] = useState([]);
   const [post, setPost] = useState(false);
+  const [openPopupIndex, setOpenPopupIndex] = useState(null);
 
   const dispatch = useDispatch();
+
+  const handleOpenClick = (index) => {
+    setOpenPopupIndex(index);
+  };
+
+  const closePopUp = () => {
+    setOpenPopupIndex(null);
+  };
 
   function handleDelete(id) {
     dispatch(updateUserStart());
@@ -102,12 +112,38 @@ function Sld() {
                   {item.cost}
                 </label>
                 <div className="buyer-tag">
-                  <button className="contact-button">more info</button>
+                  <button
+                    className="contact-button"
+                    onClick={() => handleOpenClick(index)}
+                  >
+                    more info
+                  </button>
                   <i className="icon">
                     <AiTwotoneDelete onClick={() => handleDelete(item._id)} />
                   </i>
                 </div>
               </div>
+
+              {openPopupIndex !== null && (
+                <div className="popup">
+                  <div className="popup-header">
+                    {/* <h1>Hello this is pop up</h1> */}
+                    <div className="popup-images">
+                      {sold[openPopupIndex].linkarr.map((image, imageIndex) => (
+                        <img key={imageIndex} src={image} alt={"houseimage"} />
+                      ))}
+                    </div>
+
+                    <h4>{sold[openPopupIndex].name}</h4>
+                    <p>Type: {sold[openPopupIndex].Type}</p>
+                    <p>Location: {sold[openPopupIndex].Location}</p>
+                    <p>Bedrooms: {sold[openPopupIndex].bedrooms}</p>
+                    <p>Bathrooms: {sold[openPopupIndex].bathrooms}</p>
+                    <p>Cost: ₹{sold[openPopupIndex].cost}</p>
+                  </div>
+                  <ImCross className="popup-icon" onClick={closePopUp} />
+                </div>
+              )}
             </div>
           ))
         ) : (
