@@ -72,6 +72,13 @@ button {
   animation: circle 2s linear infinite;
 }
 
+.response {
+  color: rgb(115, 190, 2);
+}
+#response {
+  color: rgb(115, 190, 2);
+}
+
 @-webkit-keyframes circle {
   0% {
     transform: rotate(0deg) translate(-30px) rotate(0deg);

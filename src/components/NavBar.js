@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { MenuItems } from "./MenuItems";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PiBuildingsLight } from "react-icons/pi";
 import { HiOutlineMenuAlt4 } from "react-icons/hi";
 import { FaRegTimesCircle } from "react-icons/fa";
@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 
 function NavBar() {
   const { currentUser } = useSelector((state) => state.user);
-
+  const navigate = useNavigate();
   const [click, setClick] = useState(false);
   const [scroll, setScroll] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -36,7 +36,11 @@ function NavBar() {
   return (
     <nav className={scroll ? "sticky scrolled" : "sticky"}>
       <div className="navbar-container">
-        <div>
+        <div
+          onClick={() => {
+            navigate("/");
+          }}
+        >
           <h2 href="/" className={`logo ${scroll ? "scroll" : ""}`}>
             <PiBuildingsLight />
             Nex
@@ -62,27 +66,7 @@ function NavBar() {
           )}
         </div>
 
-        {/* <div className="dropdown" onClick={handleDropdownClick}>
-          <img
-            src="../../Images/Andrea.jpg"
-            alt="Profile"
-            className="profile-picture"
-          />{" "}
-          {dropdownOpen && (
-            <div className="dropdown-content">
-              <Link to="/profile">Profile</Link>
-              <Link to="/seller">Seller</Link>
-              <Link to="/wishlist">Wishlist</Link>
-              <Link to="/logout">Logout</Link>
-            </div>
-          )}
-        </div> */}
-
-        {/* <Link to={"/profile"}>
-              <button className="login">Profile</button>
-            </Link> */}
         <div>
-          {/* <div className="btn"> */}
           {currentUser ? (
             <div className="dropdown" onClick={handleDropdownClick}>
               <img
@@ -94,7 +78,6 @@ function NavBar() {
                 <div className="dropdown-content">
                   <Link to="/profile">Profile</Link>
                   <Link to="/sold">Properties you sold</Link>
-                  {/* <Link to="/sold/${currentUser._id}">Properties you sold</Link> */}
                   <Link to="/wishlist">Wishlist</Link>
                   <Link
                     onClick={() => {

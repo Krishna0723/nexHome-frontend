@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import { AiOutlineHeart } from "react-icons/ai";
 import { ImLocation, ImCross } from "react-icons/im";
 import Axios from "axios";
 import "./Buy.css";
+
+import emailjs from "emailjs-com";
 
 import { PiBuildingsLight } from "react-icons/pi";
 import { useSelector } from "react-redux";
@@ -32,13 +34,6 @@ function Buy() {
   const { currentUser } = useSelector((state) => state.user);
 
   const [post, setPost] = useState(false);
-
-  const [clientInfo, setClientInfo] = useState({
-    textarea: "",
-    phoneNumber: "",
-    email: "",
-    name: "",
-  });
 
   useEffect(() => {
     // Load filter state from local storage
@@ -116,22 +111,77 @@ function Buy() {
     setOpenPopupIndex(null);
   };
 
-  const handleTextAreaChange = (e) => {
-    e.preventDefault();
-    setClientInfo({ ...clientInfo, textarea: e.target.value });
-  };
+  // const form = useRef();
 
-  const handleInputChange = (e, field) => {
-    setClientInfo({ ...clientInfo, [field]: e.target.value });
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
 
-  const handleSubmit = () => {
-    setClientInfo({
-      textarea: "",
-      phoneNumber: "",
-      email: "",
-      name: "",
-    });
+  //   emailjs
+  //     .sendForm(
+  //       "service_6z5ko2s",
+  //       "template_lfpox7h",
+  //       form.current,
+  //       "MLsCDsGiIOgV7-uCk"
+  //     )
+  //     .then(
+  //       (result) => {
+  //         console.log(result.text);
+  //         document.getElementById(
+  //           "response"
+  //         ).innerHTML = `<p class="response">Message sent Sucessfully</p>`;
+  //       },
+  //       (error) => {
+  //         console.log(error.text);
+  //         document.getElementById(
+  //           "response"
+  //         ).innerHTML = `<p class="text-successs">${error.text}</p>`;
+  //       }
+  //     );
+  // };
+
+  const [text, setText] = useState("");
+  const [email, setEmail] = useState("");
+  const [number, setNumber] = useState(0);
+  const [name, setName] = useState("");
+
+  const form = useRef();
+
+  const handleSubmit = (iemail, iname, iid) => {
+    // event.preventDefault();
+    return function (e) {
+      e.preventDefault();
+
+      console.log(iemail);
+
+      const data = {
+        reply_to: iemail,
+        name_to: iname,
+        name_from: name,
+        textarea: text,
+        phoneNumber: number,
+        from: email,
+      };
+
+      emailjs
+        .send(
+          "service_6z5ko2s",
+          "template_lfpox7h",
+          // form.current,
+          data,
+          "MLsCDsGiIOgV7-uCk"
+        )
+        .then(
+          (result) => {
+            console.log(result.text);
+            document.getElementById(
+              "response"
+            ).innerHTML = `<p class="response">Message sent Sucessfully</p>`;
+          },
+          (error) => {
+            console.log(error.text);
+          }
+        );
+    };
   };
 
   const handleFormSubmit = (e) => {
@@ -352,7 +402,6 @@ function Buy() {
           {openPopupIndex !== null && (
             <div className="popup">
               <div className="popup-header">
-                {/* <h1>Hello this is pop up</h1> */}
                 <div className="popup-images">
                   {filteredArr[openPopupIndex].linkarr.map(
                     (image, imageIndex) => (
@@ -368,33 +417,53 @@ function Buy() {
                 <p>Bathrooms: {filteredArr[openPopupIndex].bathrooms}</p>
                 <p>Cost: ₹{filteredArr[openPopupIndex].cost}</p>
 
-                <div className="popup-content">
-                  <textarea
-                    placeholder="Enter your information..."
-                    rows="4"
-                    value={clientInfo.textarea}
-                    onChange={(e) => handleTextAreaChange(e)}
-                  ></textarea>
-                  <input
-                    type="text"
-                    placeholder="Phone Number"
-                    value={clientInfo.phoneNumber}
-                    onChange={(e) => handleInputChange(e, "phoneNumber")}
-                  />
-                  <input
-                    type="text"
-                    placeholder="Email"
-                    value={clientInfo.email}
-                    onChange={(e) => handleInputChange(e, "email")}
-                  />
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    value={clientInfo.name}
-                    onChange={(e) => handleInputChange(e, "name")}
-                  />
-                  <button onClick={handleSubmit}>Submit</button>
-                </div>
+                <form
+                  ref={form}
+                  onSubmit={handleSubmit(
+                    filteredArr[openPopupIndex].mail,
+                    filteredArr[openPopupIndex].name,
+                    filteredArr[openPopupIndex]._id
+                  )}
+                >
+                  <div className="popup-content">
+                    <textarea
+                      placeholder="Enter your information..."
+                      rows="4"
+                      name="textarea"
+                      onChange={(e) => {
+                        setText(e.target.value);
+                      }}
+                    ></textarea>
+                    <input
+                      type="number"
+                      placeholder="Phone Number"
+                      name="phoneNumber"
+                      onChange={(e) => {
+                        setNumber(e.target.value);
+                      }}
+                    />
+                    <input
+                      type="email"
+                      placeholder="Email"
+                      name="reply_to"
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
+                    />
+                    <input
+                      type="text"
+                      onChange={(e) => {
+                        setName(e.target.value);
+                      }}
+                      placeholder="Name"
+                      name="name"
+                    />
+
+                    <div id="response"></div>
+
+                    <button type="submit">Submit</button>
+                  </div>
+                </form>
               </div>
               <ImCross className="popup-icon" onClick={closePopUp} />
             </div>
