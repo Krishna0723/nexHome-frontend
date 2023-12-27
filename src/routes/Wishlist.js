@@ -15,12 +15,15 @@ import {
   updateUserFailure,
 } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function Wishlist() {
   const { currentUser } = useSelector((state) => state.user);
   const [sold, setSold] = useState([]);
   const [post, setPost] = useState(false);
   const [openPopupIndex, setOpenPopupIndex] = useState(null);
+
+  const navigate = useNavigate();
 
   const [text, setText] = useState("");
   const [email, setEmail] = useState("");
@@ -34,7 +37,7 @@ function Wishlist() {
     return function (e) {
       e.preventDefault();
 
-      console.log(iemail);
+      // console.log(iemail);
 
       const data = {
         reply_to: iemail,
@@ -55,12 +58,12 @@ function Wishlist() {
         )
         .then(
           (result) => {
-            console.log(result.text);
+            // console.log(result.text);
 
             alert("Message sent sucessfully");
           },
           (error) => {
-            console.log(error.text);
+            // console.log(error.text);
           }
         );
     };
@@ -219,7 +222,17 @@ function Wishlist() {
 
                           <p id="response"></p>
 
-                          <button type="submit">Submit</button>
+                          {/* <button type="submit">Submit</button> */}
+                          <button
+                            onClick={() => {
+                              if (!currentUser) {
+                                navigate("/login");
+                              }
+                            }}
+                            type="submit"
+                          >
+                            Submit
+                          </button>
                         </div>
                       </form>
                     </div>

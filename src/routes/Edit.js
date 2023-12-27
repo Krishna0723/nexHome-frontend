@@ -23,9 +23,9 @@ function Edit() {
 
   function save() {
     dispatch(updateUserStart());
-    console.log(name);
-    console.log(email);
-    console.log(phonenumber);
+    // console.log(name);
+    // console.log(email);
+    // console.log(phonenumber);
 
     const data = {
       name: name,
@@ -33,7 +33,7 @@ function Edit() {
       phonenumber: phonenumber,
     };
 
-    console.log("Data : " + data);
+    // console.log("Data : " + data);
     Axios.patch(
       `https://nexhome-backend-uhpg.onrender.com/nexHome/edit/${currentUser._id}`,
       data

@@ -151,7 +151,7 @@ function Buy() {
     return function (e) {
       e.preventDefault();
 
-      console.log(iemail);
+      // console.log(iemail);
 
       const data = {
         reply_to: iemail,
@@ -172,13 +172,13 @@ function Buy() {
         )
         .then(
           (result) => {
-            console.log(result.text);
+            // console.log(result.text);
             document.getElementById(
               "response"
             ).innerHTML = `<p class="response">Message sent Sucessfully</p>`;
           },
           (error) => {
-            console.log(error.text);
+            // console.log(error.text);
           }
         );
     };
@@ -211,8 +211,8 @@ function Buy() {
   };
 
   const hadleLink = (id) => {
-    console.log("Called");
-    console.log(`Product id is : ${id}`);
+    // console.log("Called");
+    // console.log(`Product id is : ${id}`);
     dispatch(updateUserStart());
     Axios.patch(
       `https://nexhome-backend-uhpg.onrender.com/nexHome/wishlist/${currentUser._id}`,
@@ -461,7 +461,16 @@ function Buy() {
 
                     <div id="response"></div>
 
-                    <button type="submit">Submit</button>
+                    <button
+                      onClick={() => {
+                        if (!currentUser) {
+                          navigate("/login");
+                        }
+                      }}
+                      type="submit"
+                    >
+                      Submit
+                    </button>
                   </div>
                 </form>
               </div>

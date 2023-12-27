@@ -101,7 +101,7 @@ import { Link } from "react-router-dom";
 function Profile() {
   const { currentUser } = useSelector((state) => state.user);
 
-  console.log(currentUser.sold);
+  // console.log(currentUser.sold);
 
   const soldData = { soldArray: currentUser.sold };
 
@@ -119,7 +119,7 @@ function Profile() {
       })
       .catch((err) => {
         alert(err);
-        console.log(err);
+        // console.log(err);
       });
   }
 

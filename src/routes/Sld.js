@@ -35,8 +35,8 @@ function Sld() {
 
   function handleDelete(id) {
     dispatch(updateUserStart());
-    console.log("Deleted");
-    console.log(id);
+    // console.log("Deleted");
+    // console.log(id);
 
     Axios.post(
       `https://nexhome-backend-uhpg.onrender.com/nexHome/propertyDel/${currentUser._id}`,

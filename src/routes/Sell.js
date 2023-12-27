@@ -50,14 +50,14 @@ function Sell() {
       }
       Promise.all(promises)
         .then((urls) => {
-          console.log(urls);
+          // console.log(urls);
           setLinkarr([...linkarr, ...urls]);
           document.getElementById(
             "msg"
           ).innerHTML = `<p class="text-success">Uploded Sucssfully</p>`;
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           document.getElementById(
             "msg"
           ).innerHTML = `<p class="text-danger">Something happend Upload once again</p>`;
@@ -80,7 +80,7 @@ function Sell() {
         (snapshot) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(`Upload is ${progress}% done`);
+          // console.log(`Upload is ${progress}% done`);
           document.getElementById(
             "msg"
           ).innerHTML = `<p class="text-success">Upload is ${progress}% done</p>`;
@@ -157,8 +157,8 @@ function Sell() {
           retData
         ).then(async (res) => {
           if (res.status === 200) {
-            console.log("response");
-            console.log(res.data.data);
+            // console.log("response");
+            // console.log(res.data.data);
             await dispatch(updateUserSuccess(res.data.data));
           }
         });
@@ -342,7 +342,7 @@ function Sell() {
                   onChange={(event) => {
                     setMobile(event.target.value);
                   }}
-                  type="tel"
+                  type="number"
                   placeholder="Enter your Mobile nummber"
                 />
               </div>
